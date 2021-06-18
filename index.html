@@ -1,40 +1,525 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h3 class="r-fit-text">Regular Expressions</h3>
+        </section>
+        <section>
+          <div>
+            <img
+              style="float: left; margin-bottom: 0; margin-right: 20px"
+              width="auto"
+              height="350"
+              src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Kleene.jpg"
+              alt="Stephen Cole Kleene"
+            />
+            <p style="text-align: justify">
+              A regular expression (shortened as regex or regexp also referred
+              to as rational expression) is a sequence of characters that
+              specifies a search pattern. Regular expressions originated in
+              1951, when mathematician Stephen Cole Kleene described regular
+              languages using his mathematical notation called regular events.
+              Today, regexes are widely supported in programming languages.
+            </p>
+          </div>
+        </section>
+        <section>
+          <p>The long syntax:</p>
+          <img src="./images/long-syntax.png" />
+          <p>The short syntax:</p>
+          <img src="./images/short-syntax.png" />
+        </section>
+        <section>
+          <section>
+            <h5>Flags</h5>
+          </section>
+          <section>
+            <ul>
+              <li>
+                <code style="color: tomato">i</code> - with this flag the search
+                is case-insensitive: no difference between A and a.
+              </li>
+              <li>
+                <code style="color: tomato">g</code>- with this flag the search
+                looks for all matches, without it – only the first match is
+                returned.
+              </li>
+              <li><code style="color: tomato">m</code>- multiline mode.</li>
+              <li>
+                <code style="color: tomato">s</code>- enables “dotall” mode,
+                that allows a dot to match newline character \n .
+              </li>
+              <li>
+                <code style="color: tomato">u</code>- enables full Unicode
+                support. The flag enables correct processing of surrogate pairs.
+              </li>
+              <li>
+                <code style="color: tomato">y</code>- “Sticky” mode: searching
+                at the exact position in the text.
+              </li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <h5>String methods</h5>
+        </section>
+        <section>
+          <section>
+            <p>
+              <code style="color: goldenrod">str.match(regexp)</code> - finds
+              all matches of regexp in the string str.
+            </p>
+            <img src="./images/str-match.png" />
+          </section>
+          <section>
+            <img src="./images/match-without-g.png" />
+          </section>
+          <section>
+            <p><img src="./images/str-match-null.png" /></p>
+            <p class="fragment">
+              <img src="./images/str-match-null-solution.png" />
+            </p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <p>
+              <code style="color: goldenrod"
+                >str.replace(regexp, replacement)</code
+              >
+              - finds all matches of regexp in the string str.
+            </p>
+            <pre><code data-line-numbers="1-3|5-7" data-trim data-noescape>
+// no flag g
+"We will, we will".replace(/we/i, "I"); 
+// => I will, we will
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
+// with flag g
+"We will, we will".replace(/we/ig, "I"); 
+// => I will, I will
+              </code></pre>
+          </section>
+          <section>
+            <table>
+              <thead>
+                <tr>
+                  <th>Symbols</th>
+                  <th>Action in the replacement string</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code style="color: goldenrod">$&</code></td>
+                  <td>inserts the whole match</td>
+                </tr>
+                <tr>
+                  <td><code style="color: goldenrod">$`</code></td>
+                  <td>inserts a part of the string before the match</td>
+                </tr>
+                <tr>
+                  <td><code style="color: goldenrod">$'</code></td>
+                  <td>inserts a part of the string after the match</td>
+                </tr>
+                <tr>
+                  <td><code style="color: goldenrod">$n</code></td>
+                  <td>
+                    if n is a 1-2 digit number, then it inserts the contents of
+                    n-th parentheses
+                  </td>
+                </tr>
+                <tr>
+                  <td><code style="color: goldenrod">$&lt;name&gt;</code></td>
+                  <td>
+                    inserts the contents of the parentheses with the given name
+                  </td>
+                </tr>
+                <tr>
+                  <td><code style="color: goldenrod">$$</code></td>
+                  <td>inserts character $</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section>
+            <pre><code data-line-numbers="1-3|5-7|9-11" data-trim data-noescape>
+const string = 'type=text';
+const newString = string.replace(/text/, '"$&"');
+// => type="text"
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+const string = 'Hello John';
+const newString = string.replace(/hello/i, 'Bye $`');
+// => Bye John
+
+const string = 'Hello JavaScript';
+const newString = string.replace(/JavaScript/, "$' TypeScript");
+// => Hello TypeScript
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <p>
+            <code style="color: goldenrod">regexp.test(str)</code> - looks for
+            at least one match, if found, returns true, otherwise false.
+          </p>
+          <pre><code data-line-numbers="" data-trim data-noescape>
+              let str = "I love JavaScript";
+              let regexp = /LOVE/i;
+              
+              regexp.test(str); // => true
+                            </code></pre>
+        </section>
+        <section>
+          <h5>Character classes</h5>
+          <p class="fragment">
+            A <em>character class</em> is a special notation that matches any
+            symbol from a certain set.
+          </p>
+        </section>
+        <section>
+          <section>
+            <ul>
+              <li><code style="color: tomato">\d</code> – digits.</li>
+              <li>
+                <code style="color: tomato">\s</code> – space symbols, tabs,
+                newlines.
+              </li>
+              <li>
+                <code style="color: tomato">\w</code> – Latin letters, digits,
+                underscore '_'.
+              </li>
+              <li class="fragment" data-fragment-index="1">
+                <code style="color: tomato">\D</code> – non-digits.
+              </li>
+              <li class="fragment" data-fragment-index="1">
+                <code style="color: tomato">\S</code> – all but <code>\s</code>.
+              </li>
+              <li class="fragment" data-fragment-index="1">
+                <code style="color: tomato">\W</code> – all but <code>\w</code>.
+              </li>
+              <li class="fragment" data-fragment-index="2">
+                <code style="color: tomato">.</code> – any character if with the
+                regexp 's' flag, otherwise any except a newline <code>\n</code>.
+              </li>
+            </ul>
+          </section>
+          <section>
+            <p>Character class example</p>
+            <pre><code data-line-numbers="" data-trim data-noescape>
+            "I love HTML5!".match(/\s\w\w\w\w\d/);
+            // => ['  HTML5']
+                          </code></pre>
+            <p class="fragment" data-fragment-index="1">
+              Inverse class example
+            </p>
+            <pre><code class="fragment" data-fragment-index="1" data-line-numbers="" data-trim data-noescape>
+              const string = '+7(903)-123-45-67';
+              string.replace(/\D/g, '');
+              // => 79031234567
+                          </code></pre>
+            <p class="fragment" data-fragment-index="2">
+              “any character” class example
+            </p>
+            <pre><code class="fragment" data-fragment-index="2" data-line-numbers="" data-trim data-noescape>
+              'Z'.match(/./);
+              // => ['Z']
+                          </code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h5>Anchors</h5>
+            <ul class="fragment">
+              <li><code style="color: tomato">^</code> - start string</li>
+              <li><code style="color: tomato">$</code> - end string</li>
+            </ul>
+          </section>
+          <section>
+            <pre><code data-line-numbers="" data-trim data-noescape>
+let goodInput = "12:34";
+let badInput = "12:345";
+
+let regexp = /^\d\d:\d\d$/;
+regexp.test(goodInput); // => true
+regexp.test(badInput); // => false
+                          </code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h5>Word boundary</h5>
+            <p class="fragment"><code style="color: tomato">\b</code></p>
+          </section>
+          <section>
+            <ul>
+              <li>
+                At string start, if the first string character is a word
+                character <code style="color: tomato">\w</code>.
+              </li>
+              <li>
+                Between two characters in the string, where one is a word
+                character <code style="color: tomato">\w</code> and the other is
+                not.
+              </li>
+              <li>
+                At string end, if the last string character is a word character
+                <code style="color: tomato">\w</code>.
+              </li>
+            </ul>
+          </section>
+          <section>
+            <pre><code data-line-numbers="1|4" data-trim data-noescape>
+                "Hello, Java!".match(/\bJava\b/);  
+                //  => Java
+                
+                "Hello, JavaScript!".match(/\bJava\b/); 
+                // => null</code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h5>Escaping</h5>
+          </section>
+          <section>
+            <div>
+              <img src="./images/escaping3.png" />
+            </div>
+            <div class="fragment">
+              <img src="./images/escaping4.png" />
+            </div>
+          </section>
+          <section>
+            <div >
+              <img src="./images/escaping5.png" />
+            </div>
+            <div class="fragment">
+              <img src="./images/escaping1.png" />
+            </div>
+            <div class="fragment">
+              <img src="./images/escaping2.png" />
+            </div>
+          </section>
+        </section>
+        <section>
+          <section><h5>Sets and ranges</h5></section>
+          <section>
+            <p>Sets</p>
+            <div>
+              <img src="./images/set1.png" />
+            </div>
+            <div class="fragment">
+              <img src="./images/set2.png" />
+            </div>
+          </section>
+          <section>
+            <div>
+              <p>Ranges</p>
+              <img src="./images/range1.png" />
+            </div>
+            <div class="fragment">
+              <p>Excluding ranges</p>
+              <img src="./images/exrange.png" />
+            </div>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h5>Quantifiers</h5>
+            <code style="color: tomato">{n} + * ?</code>
+          </section>
+          <section>
+            <p>Quantity</p>
+            <div class="fragment">
+              <p>the exact count</p>
+              <img src="./images/quantifiers1.png" />
+            </div>
+            <div class="fragment">
+              <p>the range</p>
+              <img src="./images/quantifiers2.png" />
+              <p class="fragment">
+                <code style="color: tomato">{3,}</code>- 3 or more
+              </p>
+            </div>
+          </section>
+          <section>
+            <p>Shorthands</p>
+            <ul>
+              <li>
+                <p>
+                  <code style="color: tomato">+</code> - the same as
+                  <code style="color: tomato">{1,}</code>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <code style="color: tomato">?</code> - the same as
+                  <code style="color: tomato">{0,1}</code>
+                </p>
+              </li>
+              <li>
+                <p>
+                  <code style="color: tomato">*</code> - the same as
+                  <code style="color: tomato">{0,}</code>
+                </p>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <p>Examples</p>
+            <div><img src="./images/quantifiers3.png" /></div>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h5>Unicode</h5>
+            <h4>flag <code style="color: tomato">\u</code></h4>
+          </section>
+          <section>
+            <table>
+              <thead>
+                <tr >
+                  <th>
+                    Character
+                  </th>
+                  <th>
+                    Unicode
+                  </th>
+                  <th>
+                    Bytes count in Unicode
+                  </th>
+                </tr>
+              </thead>
+                <tr>
+              <tbody>
+                <td>
+                    a
+                  </td>
+                  <td>
+                    0x0061
+                  </td>
+                  <td style="text-align: center;">
+                    2
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    ≈
+                  </td>
+                  <td>
+                    0x2248
+                  </td>
+                  <td style="text-align: center;">
+                  	2
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    𝒳	
+                  </td>
+                  <td>
+                    0x1d4b3
+                  </td>
+                  <td style="text-align: center;">
+                  	4
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    𝒴	
+                  </td>
+                  <td>
+                    0x1d4b4
+                  </td>
+                  <td style="text-align: center;">
+                  	4
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    😄		
+                  </td>
+                  <td>
+                    0x1f604
+                  </td>
+                  <td style="text-align: center;">
+                  	4
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section>
+            <div><img src="./images/unicode1.png" /></div>
+          </section>
+          <section>
+            <p>Unicode properties <code style="color: tomato;">\p{…}</code></p>
+            <ul>
+              <li>
+                <code style="color: tomato;">Letter</code> (<code style="color: tomato;">L</code> alias) - alphabet character 
+              </li>
+              <li>
+                <code style="color: tomato;">Number </code> - number
+              </li>
+              <li>
+                <code style="color: tomato;">Hex_Digit</code> - hexadecimal number
+              </li>
+            </ul>
+          </section>
+          <section>
+            <div><img src="./images/unicode2.png"/></div>
+            <p class='fragment'>Unicode property Script <code style="color: tomato;">{sc=}</code></p>
+          </section>
+        </section>
+        <section>
+          <p>Materials</p>
+          <ul>
+            <li>
+              <a href="https://javascript.info/regular-expressions">Javascript.info - Regular Expressions</a>
+            </li>
+            <li>
+              <a href="https://en.wikipedia.org/wiki/Regular_expression">Wikipedia - Regular Expressions</a>
+            </li>
+            <li>
+              <a href="https://util.unicode.org/UnicodeJsps/character.jsp">Unicode Utilities: Character Properties</a>
+            </li>
+          </ul>
+          <p><code style="color: tomato;">/Thank you!/</code></p>
+        </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
 </html>
